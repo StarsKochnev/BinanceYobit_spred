@@ -26,12 +26,11 @@ while True:
 
     percent = 100 / (last_trade - last_trade_binance) / last_trade_binance
     fg = str(percent)
-    print(percent)
     f = fg.replace('e-05', '')
     percent_fin = round(float(f), 3)
     print('Разница между курсами валют в %', percent_fin)
     time.sleep(1)
-    percent_str = str(percent_fin)
+    percent_str = str(percent_fin) +' Разница достигла уровня покупки!!!! > 7%'
 
     # теперь отправляем наш % разница в телегу если разница курсов дошла до требуемого значения
 
@@ -43,7 +42,7 @@ while True:
        print(results.json())
     if percent_fin > 7:
         send_msg(percent_str)
-        send_msg('Разница достигла уровня покупки!!!! > 7%')
+
     else:
         print('Разница в курсах меньше 10%')
     time.sleep(60)
