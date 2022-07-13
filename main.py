@@ -1,5 +1,4 @@
 import json
-
 import requests
 import asyncio
 from  aiogram import Bot, Dispatcher, executor,types
@@ -24,25 +23,24 @@ while True:
 
     # считаем разницу
 
-    percent = 100 / (last_trade - last_trade_binance) / last_trade_binance
-    fg = str(percent)
-    f = fg.replace('e-05', '')
-    percent_fin = round(float(f), 3)
-    print('Разница между курсами валют в %', percent_fin)
+    percent = int(100) / (last_trade - last_trade_binance) / last_trade_binance * int(100000)
+    percent2 = round(percent, 2)
+    print('Разница между курсами валют в %', percent2)
     time.sleep(1)
-    percent_str = str(percent_fin) +' Разница достигла уровня покупки!!!! > 7%'
+    percent_str = str(percent2) + ' Разница достигла уровня покупки!!!! > 7%' + str()
 
     # теперь отправляем наш % разница в телегу если разница курсов дошла до требуемого значения
 
     def send_msg(text):
+
        token = "5555491875:AAH-aKzegGa2ZGnKrnbvllac-tRueXQPzMI"
        chat_id = "688820140"
        url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + "?chat_id=" + chat_id + "&text=" + text
        results = requests.get(url_req)
        print(results.json())
-    if percent_fin > 7:
+    if percent2 < 7 or percent2 > 10:
         send_msg(percent_str)
 
     else:
-        print('Разница в курсах меньше 10%')
+        print('Разница в курсах меньше 7 или больше 10')
     time.sleep(60)
